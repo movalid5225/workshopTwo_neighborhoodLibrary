@@ -10,7 +10,7 @@ public class Book {
     private String checkedOutTo = "";
 
     //  Default constructor
-    Book(){
+    public Book(){
         this.id = 0;
         this.isbn = "";
         this.title = "";
@@ -19,7 +19,7 @@ public class Book {
     }
 
 //  Parameterized constructor
-    Book(int id, String isbn, String title, boolean isCheckedOut, String checkedOutTo){
+    public Book(int id, String isbn, String title, boolean isCheckedOut, String checkedOutTo){
         this.id = id;
         this.isbn = isbn;
         this.title = title;
@@ -62,7 +62,7 @@ public class Book {
     }
 
     public void setCheckedOut(boolean checkedOut) {
-        isCheckedOut = checkedOut;
+        this.isCheckedOut = checkedOut;
     }
 
     public void setCheckedOutTo(String checkedOutTo) {
