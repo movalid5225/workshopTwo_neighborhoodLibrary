@@ -27,18 +27,24 @@ public class Main {
         books[17] = new Book(18, "9780062457714", "The Power of Habit", false, "");
         books[18] = new Book(19, "9780385472579", "Things Fall Apart", false, "");
         books[19] = new Book(20, "9780060850524", "Brave New World", false, "");
-        displayMenu();
-        short choice = scanner.nextShort();
-        scanner.nextLine();
+        boolean running = true;
+        while(running) {
+            displayMenu();
+            short choice = scanner.nextShort();
+            scanner.nextLine();
 
-        switch(choice){
-            case 1:
-                displayBooks(books);
-                promptUserToCheckOut();
-                break;
-            case 2:
-                displayCheckedOutBooks(books);
-                break;
+            switch (choice) {
+                case 1:
+                    displayBooks(books);
+                    promptUserToCheckOut();
+                    break;
+                case 2:
+                    displayCheckedOutBooks(books);
+                    promptUserCheckInBooks();
+                    break;
+                case 3:
+                    running = false;
+            }
         }
     }
 //  Method to display the starting menu
@@ -47,7 +53,7 @@ public class Main {
         System.out.println("Choose how you would like to spend your time at the library today");
         System.out.println("1)Show available books");
         System.out.println("2)Show checked out books");
-        System.out.print("5)Exit the library ");
+        System.out.println("3)Exit the library");
     }
 
 //  Method to display the books that are not checked out
@@ -77,11 +83,12 @@ public class Main {
         System.out.println("]");
     }
 
-//  Method to choose an available book
+//  Method to choose a single available book
     public static Book chooseBook(Book[] books, String name){
         System.out.println("Choose a book by entering its id: ");
         int bookID = scanner.nextInt();
         scanner.nextLine();
+//      empty book
         Book chosenBook = new Book();
 
         for(Book book : books){
@@ -121,6 +128,40 @@ public class Main {
             System.out.print("ID: "+b.getId()+", ");
             System.out.print("Isbn: "+b.getIsbn()+", ");
             System.out.println("Title: "+b.getTitle()+" ");
+        }
+    }
+
+//  Method that returns the book by getting the id of the book
+    public static Book getBookByID(short id , Book[] books){
+        Book b = new Book();
+
+        for(Book book : books){
+            if(book.getId() == id){
+                b = book;
+                break;
+            }
+        }
+        return b;
+
+    }
+
+//  Method to check in a single book
+    public static void checkInBook(Book book) {
+        book.setCheckedOut(false);
+        book.setCheckedOutTo("");
+    }
+
+//  Method to prompt user to check in books
+    public static void promptUserCheckInBooks() {
+        System.out.println("Enter C to check in a book");
+        System.out.println("Enter X to exit");
+        String choice = scanner.nextLine();
+
+        if (choice.equals("C") || choice.equals("c")) {
+            System.out.print("Enter the id of the book you are returning: ");
+            short id = scanner.nextShort();
+
+            checkInBook(getBookByID(id, books));
         }
     }
 }
